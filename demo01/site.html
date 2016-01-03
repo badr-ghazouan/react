@@ -1,0 +1,54 @@
+<!DOCTYPE html>
+<html>
+<head>
+	<meta charset="utf-8"/>
+	<title>markdown</title>
+	<link rel="stylesheet" type="text/css" href="site.css">
+	<script src="http://cdn.bootcss.com/jquery/1.11.2/jquery.min.js"></script>
+	<link href="http://7xku3c.com1.z0.glb.clouddn.com/md_style.css" rel="stylesheet">
+
+	<link href="http://cdn.bootcss.com/bootstrap/3.3.4/css/bootstrap.min.css" rel="stylesheet">
+    <link href="http://cdn.bootcss.com/font-awesome/4.2.0/css/font-awesome.min.css" rel="stylesheet">
+    <link href="http://static.bootcss.com/www/assets/css/site.min.css?v5" rel="stylesheet">
+    <link crossorigin="anonymous" href="https://assets-cdn.github.com/assets/github2-53964e9b93636aa437196c028e3b15febd3c6d5a52d4e8368a9c2894932d294e.css" integrity="sha256-U5ZOm5NjaqQ3GWwCjjsV/r08bVpS1Og2ipwolJMtKU4=" media="all" rel="stylesheet" />
+</head>
+<body>
+<div class="container">
+	<div class="col-md-12 form-control">
+		<input />
+		<input type="button" />
+		<br>
+	</div>			
+	<div class="col-md-5">			
+		<div class="content">
+			<div>
+				<textarea  class="form-control" id="rawContent" name="rawContent" rows="25">{{.RawContent}}</textarea>
+			</div>
+		</div>
+	</div>
+	<div class="col-md-7 sidebar">
+		<span id="markdownContent" name="markdownContent">{{.MarkdownContent}}</span>
+	</div>
+</div>
+<script type="text/javascript">
+	$(document).ready(function(){
+		$("#rawContent").keypress( function(event){
+			if ("13"==event.which) {
+				rpcmd();
+				// $(this).val("")
+			};
+		});
+	});
+	function rpcmd () {
+		$.ajax({
+		 url: '/markdown',
+		 type: 'POST',
+		 data:{"rawContent":$("#rawContent").val()},
+		 success: function(result) {
+		  	$("#markdownContent").html(result);
+		 }
+		});
+	}
+</script>
+</body>
+</html>
